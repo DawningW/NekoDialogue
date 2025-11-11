@@ -1,0 +1,1 @@
+Packages/cc.dawncraft.nekodialogue/README.md

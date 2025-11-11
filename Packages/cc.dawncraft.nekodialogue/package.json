@@ -1,0 +1,20 @@
+{
+  "name": "cc.dawncraft.nekodialogue",
+  "version": "0.0.1",
+  "displayName": "NekoDialogue",
+  "description": "A lightweight and easy-to-use dialogue system for Unity.",
+  "unity": "2020.3",
+  "documentationUrl": "https://github.com/DawningW/NekoDialogue",
+  "changelogUrl": "https://github.com/DawningW/NekoDialogue/blob/master/CHANGELOG.md",
+  "licensesUrl": "https://github.com/DawningW/NekoDialogue/blob/master/LICENSE.md",
+  "dependencies": {
+  },
+  "keywords": [
+    "dialogue"
+  ],
+  "author": {
+    "name": "Chen Wu",
+    "email": "wc@mail.dawncraft.cc",
+    "url": "https://dawncraft.github.io/"
+  }
+}
