@@ -22,7 +22,16 @@ public abstract class DialogueManager {
     /// <summary>
     /// 对话逻辑, 需要用户自行实现
     /// </summary>
-    public virtual DialogueController DialogueController {  get; }
+    public virtual DialogueController DialogueController { get; }
+
+    /// <summary>
+    /// 对话管理器单例, 用于可视化编程访问对话系统
+    /// </summary>
+    public static DialogueManager Instance { get; private set; }
+
+    public DialogueManager() {
+        Instance = this;
+    }
 
     internal void RunLoop() {
         while (counter < current.Count) {
