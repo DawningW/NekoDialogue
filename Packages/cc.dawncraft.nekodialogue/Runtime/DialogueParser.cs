@@ -1,17 +1,25 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
-// 剧本语言部分参考了https://github.com/librian-center/liber-language/blob/master/liber/core.py, 感谢
+/// <summary>
+/// 由正则表达式和访问者模式驱动的剧本语言解析器
+/// </summary>
 public class DialogueParser {
-    private const string gotoPattern = @"(?<label>[^@\s]*)?(?:@(?<file>.*))?";
+    internal const string gotoPattern = @"(?<label>[^@\s]*)?(?:@(?<file>.*))?";
     private static readonly Regex commentPattern = new Regex(@"^(.*?)#.*$", RegexOptions.Compiled);
     private static readonly Regex dialoguePattern = new Regex(@"^(?:\[(?<position>[CLR])\])?(?:(?<name>[^?*>:\(]+)(?:\((?<image>.*)\))?)?(?::\s*(?<text>.*))?", RegexOptions.Compiled);
     private static readonly Regex choicePattern = new Regex(@"^\?\s*(?<text>.*?)\s*=>\s*" + gotoPattern, RegexOptions.Compiled);
     private static readonly Regex labelPattern = new Regex(@"^\*\s*(?<label>\S*)", RegexOptions.Compiled);
     private static readonly Regex commandPattern = new Regex(@"^>\s*(?<name>\S*)\s*(?<arguments>.*)", RegexOptions.Compiled);
-    private static readonly Regex cmdGotoPattern = new Regex(gotoPattern, RegexOptions.Compiled);
-    // private static readonly Dictionary<Type, string> patterns = new Dictionary<Type, string>() {};
+
+    public delegate CmdInstruction CommandParser(string dialogue, string args);
+    private static readonly Dictionary<string, CommandParser> cmdParsers = new Dictionary<string, CommandParser>() {
+        { GotoCmdInstruction.COMMAND,    GotoCmdInstruction.Parse    },
+        { EndCmdInstruction.COMMAND,     EndCmdInstruction.Parse     },
+        { TriggerCmdInstruction.COMMAND, TriggerCmdInstruction.Parse },
+    };
 
     private readonly string id;
     private readonly TextReader textReader;
@@ -38,21 +46,20 @@ public class DialogueParser {
         return line.Trim();
     }
 
-    private Instruction ParseCommand(string name, string args) {
-        if (name.Equals("GOTO")) {
-            Match match = cmdGotoPattern.Match(args);
-            if (match.Success) {
-                return new InstructionCmdGoto { label = match.Groups["label"].Value, file = match.Groups["file"].Value };
+    private CmdInstruction ParseCommand(string name, string args) {
+        foreach (KeyValuePair<string, CommandParser> cmdParser in cmdParsers) {
+            if (name.Equals(cmdParser.Key)) {
+                return cmdParser.Value.Invoke(id, args);
             }
-        } else if (name.Equals("END")) {
-            return new InstructionCmdEnd();
-        } else if (name.Equals("TRIGGER")) {
-            return new InstructionCmdTrigger() { dialogue = id, argument = args };
         }
-        Debug.LogWarning(string.Format("无法识别剧本 {0} 在第 {1} 行的命令: {2}, 参数: {3}", id, lineCount, name, args));
+        Debug.LogWarningFormat("无法识别剧本 {0} 在第 {1} 行的命令: {2}, 参数: {3}", id, lineCount, name, args);
         return null;
     }
 
+    /// <summary>
+    /// 解析对话剧本
+    /// </summary>
+    /// <returns>对话剧本</returns>
     public Dialogue Parse() {
         Dialogue dialogue = new Dialogue {
             ID = id
@@ -69,11 +76,11 @@ public class DialogueParser {
             // 这个正则表达式中的三个部分都是可选的, 因此会匹配到空字符串
             if (match.Success && match.Value != string.Empty) {
                 string[] name = match.Groups["name"].Value.Split('|');
-                dialogue.Add(new InstructionDialogue {
+                dialogue.Add(new DialogueInstruction {
                     location = match.Groups["position"].Value switch {
-                        "C" => Overlay.FigureLocation.Center,
-                        "L" => Overlay.FigureLocation.Left,
-                        "R" => Overlay.FigureLocation.Right,
+                        "C" => DialogueUI.FigureLocation.Center,
+                        "L" => DialogueUI.FigureLocation.Left,
+                        "R" => DialogueUI.FigureLocation.Right,
                         _ => null
                     },
                     characterId = name[0],
@@ -85,7 +92,7 @@ public class DialogueParser {
             }
             match = choicePattern.Match(line);
             if (match.Success) {
-                InstructionChoice instruction = new InstructionChoice();
+                ChoiceInstruction instruction = new ChoiceInstruction();
                 instruction.Add(match.Groups["text"].Value, match.Groups["label"].Value, match.Groups["file"].Value);
                 while ((line = ReadLine()) != null) {
                     line = RemoveComment(line);
@@ -104,7 +111,7 @@ public class DialogueParser {
             }
             match = labelPattern.Match(line);
             if (match.Success) {
-                dialogue.Add(new InstructionLabel { label = match.Groups["label"].Value });
+                dialogue.Add(new LabelInstruction { label = match.Groups["label"].Value });
                 continue;
             }
             match = commandPattern.Match(line);
@@ -115,22 +122,55 @@ public class DialogueParser {
                 }
                 continue;
             }
-            Debug.LogWarning(string.Format("无法解析剧本 {0} 的第 {1} 行: {2}", id, lineCount, line));
+            Debug.LogWarningFormat("无法解析剧本 {0} 的第 {1} 行: {2}", id, lineCount, line);
         }
         textReader.Close();
         return dialogue;
     }
 
+    /// <summary>
+    /// 注册剧本命令, 形如 > COMMAND ARGS...
+    /// </summary>
+    /// <param name="cmd">剧本命令的名称</param>
+    /// <param name="parser">剧本命令的解析器</param>
+    public static void RegisterCommand(string cmd, CommandParser parser) {
+        if (cmdParsers.ContainsKey(cmd)) {
+            Debug.LogWarningFormat("重复注册剧本命令 {}, 跳过", cmd);
+            return;
+        }
+        cmdParsers.Add(cmd, parser);
+    }
+
+    /// <summary>
+    /// 从文本中解析剧本
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="text"></param>
+    /// <returns>用于从该文本中解析剧本的解析器实例</returns>
+    public static DialogueParser fromText(string id, string text) {
+        return new DialogueParser(id, new StringReader(text));
+    }
+
+    /// <summary>
+    /// 从文件中解析剧本
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
     public static DialogueParser fromPath(string path) {
         string fileName = Path.GetFileNameWithoutExtension(path);
         return new DialogueParser(fileName, new StreamReader(path));
     }
 
+    /// <summary>
+    /// 从Unity资源中解析剧本, 剧本文件必须放在Assets/Resources/Dialogues目录中
+    /// </summary>
+    /// <param name="location"></param>
+    /// <returns></returns>
     public static DialogueParser fromResource(string location) {
         TextAsset textAsset = Resources.Load<TextAsset>("Dialogues/" + location);
         // string assetName = textAsset.name;
-        StringReader stringReader = new StringReader(textAsset.text);
+        DialogueParser parser = fromText(location, textAsset.text);
         Resources.UnloadAsset(textAsset);
-        return new DialogueParser(location, stringReader);
+        return parser;
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 
-public class InstructionChoice: Instruction {
+/// <summary>
+/// 选择指令
+/// </summary>
+public class ChoiceInstruction: Instruction {
     public sealed class Choice {
         public string text;
         public string label;
@@ -17,8 +20,8 @@ public class InstructionChoice: Instruction {
     public int Count { get => choices.Count; }
 
     public override Result Execute(DialogueManager dialogueManager) {
-        dialogueManager.OverlayUI.SetChoices(choices);
-        Game.Instance.PlayerController.WaitForMakeChoice(Count);
+        dialogueManager.DialogueUI.SetChoices(choices);
+        dialogueManager.DialogueController.WaitForMakeChoice(Count);
         return Result.AWAIT;
     }
 }
