@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,11 @@ public abstract class DialogueManager {
     public Dictionary<string, string> figureSprites = new Dictionary<string, string>();
     // 程序计数器(bushi
     protected int counter;
+
+    /// <summary>
+    /// 由TRIGGER命令触发的事件, 代码中建议使用DialogueEventListener, 可视化编程中建议使用DialogueEvent
+    /// </summary>
+    public Action<string, string> triggerDelegates;
 
     /// <summary>
     /// 对话界面, 需要用户自行实现
