@@ -1,4 +1,6 @@
-﻿/// <summary>
+namespace Dawncraft.NekoDialogue {
+
+/// <summary>
 /// 自定义事件命令指令
 /// </summary>
 public class TriggerCmdInstruction: CmdInstruction {
@@ -17,4 +19,6 @@ public class TriggerCmdInstruction: CmdInstruction {
     public static TriggerCmdInstruction Parse(string dialogue, string args) {
         return new TriggerCmdInstruction() { dialogue = dialogue, argument = args };
     }
+}
+
 }

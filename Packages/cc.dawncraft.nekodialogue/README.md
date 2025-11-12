@@ -43,7 +43,7 @@ openupm add cc.dawncraft.nekodialogue
 Unity 自带的包管理器也支持[通过 Git 仓库导入包](https://docs.unity3d.com/Manual/upm-ui-giturl.html)，具体步骤如下：
 
 1. 点击 Unity 包管理器左上角的 + 号按钮，选择 `Add package from git URL...` 选项
-2. 在弹出的对话框中输入本仓库的 Git URL：https://github.com/DawningW/NekoDialogue.git
+2. 在弹出的对话框中输入本仓库的 Git URL：https://github.com/DawningW/NekoDialogue.git?path=Packages/cc.dawncraft.nekodialogue
 
 这种方式需要您手动处理依赖，好在 NekoDialogue 目前仅依赖于 Unity 引擎本身和可视化编程插件。
 

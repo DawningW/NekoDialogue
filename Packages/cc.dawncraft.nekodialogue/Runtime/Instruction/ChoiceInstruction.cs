@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+
+namespace Dawncraft.NekoDialogue {
 
 /// <summary>
 /// 选择指令
@@ -24,4 +26,6 @@ public class ChoiceInstruction: Instruction {
         dialogueManager.DialogueController.WaitForMakeChoice(Count);
         return Result.AWAIT;
     }
+}
+
 }

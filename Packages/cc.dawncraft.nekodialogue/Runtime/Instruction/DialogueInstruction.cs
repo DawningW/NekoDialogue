@@ -1,4 +1,6 @@
-﻿/// <summary>
+namespace Dawncraft.NekoDialogue {
+
+/// <summary>
 /// 对话指令
 /// </summary>
 public class DialogueInstruction: Instruction {
@@ -50,4 +52,6 @@ public class DialogueInstruction: Instruction {
         dialogueManager.DialogueController.WaitForNextDialogue();
         return Result.AWAIT;
     }
+}
+
 }

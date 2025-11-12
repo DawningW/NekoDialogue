@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+
+namespace Dawncraft.NekoDialogue {
 
 /// <summary>
 /// 对话剧本数据类
@@ -34,4 +36,6 @@ public class Dialogue: List<Instruction> {
             return false;
         });
     }
+}
+
 }

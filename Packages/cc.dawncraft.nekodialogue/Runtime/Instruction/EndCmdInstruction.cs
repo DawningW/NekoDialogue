@@ -1,4 +1,6 @@
-﻿/// <summary>
+namespace Dawncraft.NekoDialogue {
+
+/// <summary>
 /// 剧本结束命令指令
 /// </summary>
 public class EndCmdInstruction: CmdInstruction {
@@ -14,4 +16,6 @@ public class EndCmdInstruction: CmdInstruction {
     public static EndCmdInstruction Parse(string dialogue, string args) {
         return new EndCmdInstruction();
     }
+}
+
 }

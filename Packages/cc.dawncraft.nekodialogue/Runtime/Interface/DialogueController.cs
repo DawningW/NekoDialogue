@@ -1,15 +1,19 @@
+namespace Dawncraft.NekoDialogue {
+
 /// <summary>
-/// ¶Ô»°Âß¼­ÊÊÅä²ã, ĞèÒªÓÃ»§×ÔĞĞÊµÏÖ²¢×¢²á½øDialogueManager
+/// å¯¹è¯é€»è¾‘é€‚é…å±‚, éœ€è¦ç”¨æˆ·è‡ªè¡Œå®ç°å¹¶æ³¨å†Œè¿›DialogueManager
 /// </summary>
 public interface DialogueController {
     /// <summary>
-    /// µÈ´ıÍæ¼ÒÊäÈëÒÔÖ´ĞĞÏÂÒ»¾ä¶Ô»°Ê±µ÷ÓÃ´Ë·½·¨
+    /// ç­‰å¾…ç©å®¶è¾“å…¥ä»¥æ‰§è¡Œä¸‹ä¸€å¥å¯¹è¯æ—¶è°ƒç”¨æ­¤æ–¹æ³•
     /// </summary>
     public void WaitForNextDialogue();
 
     /// <summary>
-    /// µÈ´ıÍæ¼ÒÊäÈëÒÔ×ö³öÑ¡ÔñÊ±µ÷ÓÃ´Ë·½·¨
+    /// ç­‰å¾…ç©å®¶è¾“å…¥ä»¥åšå‡ºé€‰æ‹©æ—¶è°ƒç”¨æ­¤æ–¹æ³•
     /// </summary>
-    /// <param name="count">Ñ¡ÏîÊıÁ¿</param>
+    /// <param name="count">é€‰é¡¹æ•°é‡</param>
     public void WaitForMakeChoice(int count);
+}
+
 }

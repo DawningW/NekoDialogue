@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
+
+namespace Dawncraft.NekoDialogue {
 
 /// <summary>
 /// 由正则表达式和访问者模式驱动的剧本语言解析器
@@ -173,4 +175,6 @@ public class DialogueParser {
         Resources.UnloadAsset(textAsset);
         return parser;
     }
+}
+
 }

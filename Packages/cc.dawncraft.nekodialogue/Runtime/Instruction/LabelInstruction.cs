@@ -1,4 +1,6 @@
-﻿/// <summary>
+namespace Dawncraft.NekoDialogue {
+
+/// <summary>
 /// 标签指令
 /// </summary>
 public class LabelInstruction: Instruction {
@@ -7,4 +9,6 @@ public class LabelInstruction: Instruction {
     public override Result Execute(DialogueManager dialogueManager) {
         return Result.END;
     }
+}
+
 }

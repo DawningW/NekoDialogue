@@ -1,6 +1,10 @@
+namespace Dawncraft.NekoDialogue {
+
 /// <summary>
-/// ×Ô¶¨ÒåÃüÁîÖ¸Áî
+/// è‡ªå®šä¹‰å‘½ä»¤æŒ‡ä»¤
 /// </summary>
-public abstract class CmdInstruction : Instruction {
+public abstract class CmdInstruction: Instruction {
     public virtual string Command { get; }
+}
+
 }

@@ -1,76 +1,80 @@
 using System.Collections.Generic;
 
+namespace Dawncraft.NekoDialogue {
+
 /// <summary>
-/// ¶Ô»°½çÃæÊÊÅä²ã, ĞèÒªÓÃ»§×ÔĞĞÊµÏÖ²¢×¢²á½øDialogueManager
+/// å¯¹è¯ç•Œé¢é€‚é…å±‚, éœ€è¦ç”¨æˆ·è‡ªè¡Œå®ç°å¹¶æ³¨å†Œè¿›DialogueManager
 /// </summary>
 public interface DialogueUI {
     /// <summary>
-    /// Òª¿ØÖÆµÄÁ¢»æÎ»ÖÃ
+    /// è¦æ§åˆ¶çš„ç«‹ç»˜ä½ç½®
     /// </summary>
     public enum FigureLocation {
         /// <summary>
-        /// ÖĞ¼äµÄÁ¢»æ
+        /// ä¸­é—´çš„ç«‹ç»˜
         /// </summary>
         Center,
         /// <summary>
-        /// ×ó±ßµÄÁ¢»æ
+        /// å·¦è¾¹çš„ç«‹ç»˜
         /// </summary>
         Left,
         /// <summary>
-        /// ÓÒ±ßµÄÁ¢»æ
+        /// å³è¾¹çš„ç«‹ç»˜
         /// </summary>
         Right
     }
 
     /// <summary>
-    /// ¶Ô»°½çÃæÊÇ·ñÏÔÊ¾
+    /// å¯¹è¯ç•Œé¢æ˜¯å¦æ˜¾ç¤º
     /// </summary>
     public bool Active { get; set; }
 
     /// <summary>
-    /// ÉèÖÃÖ¸¶¨Î»ÖÃµÄÁ¢»æÍ¼Æ¬
+    /// è®¾ç½®æŒ‡å®šä½ç½®çš„ç«‹ç»˜å›¾ç‰‡
     /// </summary>
-    /// <param name="location">Á¢»æÎ»ÖÃ</param>
-    /// <param name="characterId">Á¢»æ½ÇÉ«ID</param>
-    /// <param name="image">Á¢»æÍ¼Æ¬ID</param>
+    /// <param name="location">ç«‹ç»˜ä½ç½®</param>
+    /// <param name="characterId">ç«‹ç»˜è§’è‰²ID</param>
+    /// <param name="image">ç«‹ç»˜å›¾ç‰‡ID</param>
     public void SetFigure(FigureLocation location, string characterId, string image);
 
     /// <summary>
-    /// ¾Û½¹¾µÍ·µ½Ö¸¶¨Î»ÖÃµÄÁ¢»æÉÏ
+    /// èšç„¦é•œå¤´åˆ°æŒ‡å®šä½ç½®çš„ç«‹ç»˜ä¸Š
     /// </summary>
-    /// <param name="location">Á¢»æÎ»ÖÃ, ´«Èënull±íÊ¾¶¼²»¾Û½¹, Ò»°ãÓÃÓÚÅÔ°×</param>
+    /// <param name="location">ç«‹ç»˜ä½ç½®, ä¼ å…¥nullè¡¨ç¤ºéƒ½ä¸èšç„¦, ä¸€èˆ¬ç”¨äºæ—ç™½</param>
     public void FocusOnFigure(FigureLocation? location);
 
     /// <summary>
-    /// ÉèÖÃ¶Ô»°½çÃæµÄÈËÎïÃû³Æ
+    /// è®¾ç½®å¯¹è¯ç•Œé¢çš„äººç‰©åç§°
     /// </summary>
-    /// <param name="name">ÈËÎïÃû³Æ</param>
+    /// <param name="name">äººç‰©åç§°</param>
     public void SetName(string name);
 
     /// <summary>
-    /// ÉèÖÃ¶Ô»°½çÃæµÄÏûÏ¢ÎÄ±¾
+    /// è®¾ç½®å¯¹è¯ç•Œé¢çš„æ¶ˆæ¯æ–‡æœ¬
     /// </summary>
-    /// <param name="message">ÏûÏ¢ÎÄ±¾</param>
+    /// <param name="message">æ¶ˆæ¯æ–‡æœ¬</param>
     public void SetMessage(string message);
 
     /// <summary>
-    /// ¿ªÊ¼²¥·Å´ò×Ö¶¯»­, Äã¿ÉÒÔÊ¹ÓÃÈÎÒâ¶¯»­¿âÊµÏÖÈÎÒâ¶¯»­Ğ§¹û
+    /// å¼€å§‹æ’­æ”¾æ‰“å­—åŠ¨ç”», ä½ å¯ä»¥ä½¿ç”¨ä»»æ„åŠ¨ç”»åº“å®ç°ä»»æ„åŠ¨ç”»æ•ˆæœ
     /// </summary>
     public void PlayTypingAnimation();
 
     /// <summary>
-    /// Í£Ö¹²¥·Å´ò×Ö¶¯»­
+    /// åœæ­¢æ’­æ”¾æ‰“å­—åŠ¨ç”»
     /// </summary>
     public void StopTypingAnimation();
 
     /// <summary>
-    /// ÉèÖÃ¶Ô»°½çÃæÖĞÒªÑ¡ÔñµÄÑ¡Ïî
+    /// è®¾ç½®å¯¹è¯ç•Œé¢ä¸­è¦é€‰æ‹©çš„é€‰é¡¹
     /// </summary>
-    /// <param name="choices">Ñ¡Ïî</param>
+    /// <param name="choices">é€‰é¡¹</param>
     public void SetChoices(List<ChoiceInstruction.Choice> choices);
 
     /// <summary>
-    /// Òş²Ø¶Ô»°½çÃæÖĞÒªÑ¡ÔñµÄÑ¡Ïî
+    /// éšè—å¯¹è¯ç•Œé¢ä¸­è¦é€‰æ‹©çš„é€‰é¡¹
     /// </summary>
     public void HideChoices();
+}
+
 }

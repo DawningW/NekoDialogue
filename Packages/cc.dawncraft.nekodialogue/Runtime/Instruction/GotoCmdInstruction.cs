@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
+
+namespace Dawncraft.NekoDialogue {
 
 /// <summary>
 /// 跳转命令指令
@@ -30,4 +32,6 @@ public class GotoCmdInstruction: CmdInstruction {
         }
         return null;
     }
+}
+
 }

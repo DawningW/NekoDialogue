@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
+
+namespace Dawncraft.NekoDialogue {
 
 /// <summary>
 /// 对话管理器, 用户需要创建其子类并实现DialogueUI和DialogueController
@@ -178,4 +180,6 @@ public abstract class DialogueManager {
         }
         return dialogueMap[id];
     }
+}
+
 }

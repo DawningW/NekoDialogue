@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Ludiq;
 using Bolt;
+
+namespace Dawncraft.NekoDialogue {
 
 /// <summary>
 /// 对话中由TRIGGER命令触发的事件
@@ -40,4 +42,6 @@ public class DialogueEvent: GlobalEventUnit<DialogueEvent.Value> {
         public string dialogue;
         public string argument;
     }
+}
+
 }
