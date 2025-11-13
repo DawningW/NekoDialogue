@@ -146,8 +146,8 @@ public class DialogueParser {
     /// <summary>
     /// 从文本中解析剧本
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="text"></param>
+    /// <param name="id">对话剧本ID</param>
+    /// <param name="text">对话剧本内容</param>
     /// <returns>用于从该文本中解析剧本的解析器实例</returns>
     public static DialogueParser fromText(string id, string text) {
         return new DialogueParser(id, new StringReader(text));
@@ -156,8 +156,8 @@ public class DialogueParser {
     /// <summary>
     /// 从文件中解析剧本
     /// </summary>
-    /// <param name="path"></param>
-    /// <returns></returns>
+    /// <param name="path">对话剧本文件路径</param>
+    /// <returns>用于从该文件中解析剧本的解析器实例</returns>
     public static DialogueParser fromPath(string path) {
         string fileName = Path.GetFileNameWithoutExtension(path);
         return new DialogueParser(fileName, new StreamReader(path));
@@ -166,8 +166,8 @@ public class DialogueParser {
     /// <summary>
     /// 从Unity资源中解析剧本, 剧本文件必须放在Assets/Resources/Dialogues目录中
     /// </summary>
-    /// <param name="location"></param>
-    /// <returns></returns>
+    /// <param name="location">对话剧本相对于Dialogues目录的路径</param>
+    /// <returns>用于从该资源中解析剧本的解析器实例</returns>
     public static DialogueParser fromResource(string location) {
         TextAsset textAsset = Resources.Load<TextAsset>("Dialogues/" + location);
         // string assetName = textAsset.name;

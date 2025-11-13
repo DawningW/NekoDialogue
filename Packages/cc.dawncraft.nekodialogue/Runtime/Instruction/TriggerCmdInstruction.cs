@@ -13,7 +13,6 @@ public class TriggerCmdInstruction: CmdInstruction {
 
     public override Result Execute(DialogueManager dialogueManager) {
         DialogueManager.Instance.triggerDelegates.Invoke(dialogue, argument);
-        DialogueEvent.Trigger(dialogue, argument);
         return Result.AWAIT;
     }
 

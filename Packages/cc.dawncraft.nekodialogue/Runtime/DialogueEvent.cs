@@ -6,7 +6,7 @@ namespace Dawncraft.NekoDialogue {
 /// <summary>
 /// 对话中由TRIGGER命令触发的事件
 /// </summary>
-public class DialogueEventListener: MonoBehaviour {
+public class DialogueEvent: MonoBehaviour {
     public UnityEvent<string, string> OnTrigger;
 
     private void OnEnable() {

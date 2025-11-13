@@ -63,6 +63,14 @@ flora: ......
 > 不存在的命令 不存在的参数
 ```
 
+## 可视化编程
+
+NekoDialogue 支持 Unity 的可视化编程工具 Bolt，这是通过反射自动生成 Reflection Units 来实现的。
+
+要使用可视化编程，首先需要安装 Bolt 插件，然后将 NekoDialogue 加入到扫描程序集中。打开 `Tools -> Bolt -> Unit Options Wizard`，在 `Assemblies` 页面中添加 `Dawncraft.NekoDialogue` 程序集，再点击生成即可。
+
+若想获得更好的可视化编程体验，您也可以手动实现调用了 DialogueManager 相关接口的 Unit，如对话事件、开始对话、继续对话、结束对话等，具体请参考 Bolt 的官方文档。
+
 ## API
 
 请见代码中的文档注释

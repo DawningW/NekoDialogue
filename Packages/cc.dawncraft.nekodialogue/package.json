@@ -1,12 +1,12 @@
 {
   "name": "cc.dawncraft.nekodialogue",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "displayName": "NekoDialogue",
   "description": "A lightweight and easy-to-use dialogue system for Unity.",
   "unity": "2020.3",
-  "documentationUrl": "https://github.com/DawningW/NekoDialogue",
-  "changelogUrl": "https://github.com/DawningW/NekoDialogue/blob/master/CHANGELOG.md",
-  "licensesUrl": "https://github.com/DawningW/NekoDialogue/blob/master/LICENSE.md",
+  "documentationUrl": "https://github.com/DawningW/NekoDialogue/blob/master/Packages/cc.dawncraft.nekodialogue/Documentation~/index.md",
+  "changelogUrl": "https://github.com/DawningW/NekoDialogue/blob/master/Packages/cc.dawncraft.nekodialogue/CHANGELOG.md",
+  "licensesUrl": "https://github.com/DawningW/NekoDialogue/blob/master/Packages/cc.dawncraft.nekodialogue/LICENSE.md",
   "dependencies": {
   },
   "keywords": [

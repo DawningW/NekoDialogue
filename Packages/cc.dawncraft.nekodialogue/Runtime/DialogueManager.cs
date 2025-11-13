@@ -7,7 +7,8 @@ namespace Dawncraft.NekoDialogue {
 /// <summary>
 /// 对话管理器, 用户需要创建其子类并实现DialogueUI和DialogueController
 /// </summary>
-public abstract class DialogueManager {
+[DisallowMultipleComponent]
+public abstract class DialogueManager: MonoBehaviour {
     private static readonly Dictionary<string, Dialogue> dialogueMap = new Dictionary<string, Dialogue>();
 
     public Dialogue current { get; private set; }
@@ -17,7 +18,9 @@ public abstract class DialogueManager {
     protected int counter;
 
     /// <summary>
-    /// 由TRIGGER命令触发的事件, 代码中建议使用DialogueEventListener, 可视化编程中建议使用DialogueEvent
+    /// 由TRIGGER命令触发的事件会调用此委托
+    /// <br />
+    /// 建议使用DialogueEvent组件, 而非直接注册此委托
     /// </summary>
     public Action<string, string> triggerDelegates;
 
@@ -96,7 +99,7 @@ public abstract class DialogueManager {
     /// <summary>
     /// 开始新的对话
     /// </summary>
-    /// <param name="dialogue">要开始的对话</param>
+    /// <param name="dialogue">要开始的对话剧本</param>
     /// <param name="label">指定从哪个标签开始, 空字符串表示从头开始</param>
     public void StartDialogue(Dialogue dialogue, string label) {
         if (dialogue == null) {
@@ -107,6 +110,14 @@ public abstract class DialogueManager {
         GotoLabel(label);
         ContinueDialogue();
     }
+
+    /// <summary>
+    /// 开始新的对话
+    /// </summary>
+    /// <param name="id">要开始的对话剧本ID</param>
+    /// <param name="label">指定从哪个标签开始, 空字符串表示从头开始</param>
+    public void StartDialogue(string id, string label) =>
+        StartDialogue(GetDialogue(id), label);
 
     /// <summary>
     /// 从当前指令开始继续对话
@@ -182,7 +193,7 @@ public abstract class DialogueManager {
     /// <br />
     /// 推荐在游戏加载时调用PreloadDialogues提前预加载剧本, 避免性能问题
     /// </summary>
-    /// <param name="id">剧本ID</param>
+    /// <param name="id">对话剧本ID</param>
     /// <returns>对话剧本</returns>
     public static Dialogue GetDialogue(string id) {
         if (!dialogueMap.ContainsKey(id)) {
