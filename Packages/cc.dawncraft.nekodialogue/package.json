@@ -1,6 +1,6 @@
 {
   "name": "cc.dawncraft.nekodialogue",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "displayName": "NekoDialogue",
   "description": "A lightweight and easy-to-use dialogue system for Unity.",
   "unity": "2020.3",
