@@ -56,8 +56,9 @@ Unity 自带的包管理器也支持[通过 Git 仓库导入包](https://docs.un
 1. 将 NekoDialogue 导入到您的 Unity 项目中
 2. 实现 `DialogueUI` 和 `DialogueController`，并将其挂载到对话界面和玩家控制器上
 3. 创建 `DialogueManager` 的子类，让 `DialogueUI` 和 `DialogueController` 返回对应的实例
-4. 在您的游戏主类中创建并初始化 `DialogueManager` 实例，然后就可以使用它来管理对话了
-5. 在 `Assets/Resources/Dialogues` 目录下编写对话剧本，并使用 `DialogueManager` 加载和运行对话
+4. 把 `DialogueManager` 的子类挂载到一个不会被销毁的游戏对象上，然后就可以用它来管理对话了
+   > 注意：`DialogueManager` 是单例模式，在整个游戏中只能存在一个
+5. 在 `Assets/Resources/Dialogues` 目录下编写对话剧本，并使用 `DialogueManager.Instance` 加载和运行对话
 
 ## 文档
 
